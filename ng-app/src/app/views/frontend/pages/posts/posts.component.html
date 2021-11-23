@@ -1,1 +1,21 @@
 <p>posts works!</p>
+
+<div class="table-responsive">
+    <table class="table text-center table-hover table-bordered">
+      <thead>
+        <tr>
+          <th style="width: 34%;">ID</th>
+          <th style="width: 22%;">Title</th>
+          <th style="width: 22%;">Description</th>
+        
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let post of posts">
+          <td>{{post.id}}</td>
+          <td>{{post.title.rendered}}</td>
+          <td>{{post.content.rendered}}</td>
+        </tr>
+      </tbody>
+    </table>
+</div>
