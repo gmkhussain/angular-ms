@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "sass": "node-sass -w scss/ -o dist/css/ --recursive"
   },
   "private": true,
   "dependencies": {
@@ -18,6 +19,9 @@
     "@angular/platform-browser": "~13.0.0",
     "@angular/platform-browser-dynamic": "~13.0.0",
     "@angular/router": "~13.0.0",
+    "@popperjs/core": "^2.10.2",
+    "bootstrap": "^5.1.3",
+    "node-sass": "^6.0.1",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
