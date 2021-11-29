@@ -245,5 +245,121 @@ export class AppRoutingModule { }
 
 
 # Login
+- Create Login component ```ng g c login```
+
+- import ```FormsModule``` in App
+
+#### src/app/app.module.ts
+```js
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { FormsModule } from '@angular/forms' //<-- Login Form
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+
+import { HttpClientModule } from '@angular/common/http';
+
+import { HomeComponent } from './views/frontend/pages/home/home.component';
+import { HeaderComponent } from './views/frontend/layouts/header/header.component';
+import { PostsComponent } from './views/frontend/pages/posts/posts.component';
+import { PostSingleComponent } from './views/frontend/pages/post-single/post-single.component';
+import { DefaultLayoutComponent } from './views/frontend/layouts/default-layout/default-layout.component';
+import { AuthLayoutComponent } from './views/frontend/layouts/auth-layout/auth-layout.component';
+import { LoginComponent } from './views/frontend/pages/login/login.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    HeaderComponent,
+    PostsComponent,
+    PostSingleComponent,
+    DefaultLayoutComponent,
+    AuthLayoutComponent,
+    LoginComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule, // <-- Login Form
+    AppRoutingModule,
+    HttpClientModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+```
+
+
+#### src/app/views/frontend/pages/login/login.html
+```js
+<section class="login-page">
+    <div class="container">
+        <p>login works!</p>
+            <form>
+                <div class="form-group">
+                    <label>Username</label>
+                    <input
+                        [(ngModel)]="loginUserData.username"
+                        name="username" 
+                        type="text"
+                        class="form-control"
+                    />
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input
+                        [(ngModel)]="loginUserData.password"
+                        name="password"
+                        type="password"
+                        class="form-control"
+                        />
+                </div>
+                <div class="form-group mt-4">
+                    <button
+                        class="btn btn-primary"
+                        type="button"
+                        (click)="loginUser()"
+                        >Login</button>
+                </div>
+            </form>
+
+    </div>
+</section>
+```
+
+#### src/app/views/frontend/pages/login/login.component.ts
+```js
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
+})
+export class LoginComponent implements OnInit {
+
+  loginUserData = { // <---
+    username: '',
+    password: ''
+  }
+  constructor() { }
+
+  ngOnInit(): void {
+
+  }
+
+  loginUser() {
+    console.log( this.loginUserData ) // <---
+  }
+}
+```
+
+
+
+
 - Create login services
 - ```ng g s```
