@@ -64,6 +64,57 @@ export class AppRoutingModule { }
 
 
 
+## Tabs
+
+#### src/app/views/frontend/pages/home/home.component.html
+```js
+<div class="tab">
+    <ul>
+      <li id="mission" (click)="tabChange('mission')">Our Mission</li>
+      <li id="vision" (click)="tabChange('vision')">Our Vision</li>
+      <li id="about" (click)="tabChange('about')">About</li>
+    </ul>
+    <div class="content">
+      <div class="content-value" [hidden]="currentTab != 'mission'">
+        <p>Mission content...</p>
+      </div>
+      <div class="content-value" [hidden]="currentTab != 'vision'">
+        <p>vision content...</p>
+      </div>
+      <div class="content-value" [hidden]="currentTab != 'about'">
+        <p>about content...</p>
+      </div>
+    </div>
+</div>
+```
+
+
+##### is the equivalent of v-show in Vue.js
+```js
+[hidden]="currentTab != 'mission'"
+```
+
+
+OR use if statment...
+
+```js
+*ngIf="currentTab == 'mission'"
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
