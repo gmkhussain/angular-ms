@@ -546,3 +546,51 @@ export class DashboardComponent implements OnInit {
   }
 }
 ```
+
+
+
+
+
+
+
+
+
+
+
+## Config URLs for API Endpoints
+
+##### environment.ts
+```js
+export const environment = {
+  production: false,
+  API_URL: "http://localhost/projects/_rd/VueWP/wordpress/wp-json/jwt-auth/v1/token"  //<-- Here
+};
+```
+
+
+
+##### login.service.ts
+
+```js
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http'
+import { environment } from 'src/environments/environment';
+
+@Injectable({
+  providedIn: 'root'
+})
+
+export class LoginService {
+  private _apiUrl = environment.API_URL
+  private _loginUrl = "jwt-auth/v1/token" //<-- Here
+  
+  constructor( private http: HttpClient ) { }
+
+  loginUser( user ) {
+    
+    console.log(`${this._apiUrl}${this._loginUrl}`);  //<-- Here
+
+    return this.http.post<any>(`${this._apiUrl}${this._loginUrl}`, user)  //<-- Here
+  }
+}
+```
