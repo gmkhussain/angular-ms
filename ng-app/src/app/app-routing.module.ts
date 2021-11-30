@@ -13,6 +13,9 @@ import { AuthLayoutComponent } from './views/frontend/layouts/auth-layout/auth-l
 import { LoginComponent } from './views/frontend/pages/login/login.component';
 
 
+import { DashboardComponent } from './views/backend/pages/dashboard/dashboard.component';
+
+
 
 const routes: Routes = [
     // basic routes
@@ -22,7 +25,8 @@ const routes: Routes = [
       children: [
         { path: '', component: HomeComponent },
         { path: 'posts', component: PostsComponent },
-        { path: "post/:id", component: PostSingleComponent }
+        { path: "post/:id", component: PostSingleComponent },
+        { path: "admin/dashboard", component: DashboardComponent }
       ]
     },
     {

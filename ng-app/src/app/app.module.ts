@@ -15,6 +15,7 @@ import { PostSingleComponent } from './views/frontend/pages/post-single/post-sin
 import { DefaultLayoutComponent } from './views/frontend/layouts/default-layout/default-layout.component';
 import { AuthLayoutComponent } from './views/frontend/layouts/auth-layout/auth-layout.component';
 import { LoginComponent } from './views/frontend/pages/login/login.component';
+import { DashboardComponent } from './views/backend/pages/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { LoginComponent } from './views/frontend/pages/login/login.component';
     PostSingleComponent,
     DefaultLayoutComponent,
     AuthLayoutComponent,
-    LoginComponent
+    LoginComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

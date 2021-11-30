@@ -376,6 +376,7 @@ export class AppModule { }
                         (click)="loginUser()"
                         >Login</button>
                 </div>
+                <p>{{loginUserData.loginFeedback}}</p>
             </form>
 
     </div>
@@ -412,5 +413,136 @@ export class LoginComponent implements OnInit {
 
 
 
-- Create login services
+#### Create login services
+- Goto ```src/app/frontend/pages/login```
 - ```ng g s```
+
+
+
+##### login.services.ts
+```js
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http'
+
+@Injectable({
+  providedIn: 'root'
+})
+export class LoginService {
+
+  private _loginUrl = "http://localhost/projects/_rd/VueWP/wordpress/wp-json/jwt-auth/v1/token"
+  constructor( private http: HttpClient ) { }
+
+  loginUser( user ) {
+    return this.http.post<any>(this._loginUrl, user)
+  }
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+##### login.component.ts
+```js
+import { Component, OnInit } from '@angular/core';
+import { LoginService } from './login.service'
+
+import { Router } from '@angular/router'; //<-- For Redirect
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
+})
+export class LoginComponent implements OnInit {
+
+  loginUserData = {
+    username: '',
+    password: '',
+    loginFeedback: ''
+  }
+  
+  constructor(
+      private _login: LoginService,
+      private router: Router //<-- For Redirect
+    ) { }
+
+  ngOnInit(): void {
+
+  }
+
+  loginUser() {
+    console.log( this.loginUserData )
+    // Sending Data to Api
+    this._login.loginUser( this.loginUserData ).subscribe(
+      res => {
+        console.log( res );
+
+        localStorage.setItem("token", res.token)
+        console.log( "Token::", localStorage.getItem("token") )
+        
+        this.router.navigate(['/admin/dashboard']); //<-- Redirecting to dashboard
+
+      },
+      err => {
+        console.log("Login Err", err )
+        this.loginUserData.loginFeedback = "Try again..."
+     }
+    )
+  }
+}
+```
+
+
+
+
+###### Create dashboard page
+
+- Goto ```src/app/views/backend/pages/```
+
+- ```ng g c dashboard```
+
+
+
+
+
+
+
+
+### Check Authentication status on Dashboard URL
+
+##### dashboard.components.ts
+```js
+import { Component, OnInit } from '@angular/core';
+
+import { Router } from '@angular/router'; //<-- For Redirect
+
+@Component({
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss']
+})
+export class DashboardComponent implements OnInit {
+
+  constructor(
+    private router: Router //<-- For Redirect
+  ) { }
+
+  ngOnInit(): void {
+
+    // If Token doesnt exist...
+    // Redirect to home URL...
+    if( localStorage.getItem("token")?.length === 0 ) { // <--- Here
+      this.router.navigate(['/']);
+      console.log(localStorage.getItem("token"))
+    }
+
+  }
+}
+```
