@@ -16,12 +16,21 @@ import { ThrowStmt } from '@angular/compiler';
 export class PostsComponent {
  
   posts: any;
+
+  searchData = {
+    searchString: ''
+  }
+
   constructor(
     public http: HttpClient,
     public baseService: BaseService
   ) { }
 
-    
+  
+  searchFunc() {
+    console.log(this.searchData.searchString)
+    this.searchPost( this.searchData.searchString )
+  }
   
   // Service
   getPost() {
@@ -40,9 +49,29 @@ export class PostsComponent {
 
   }
 
+
+
+
+    // Search Service
+    searchPost( _str ) {
+    
+      console.log("searchPost()... from baseService")
+  
+      this.baseService.search("wp/v2/search", _str, 4, 1 ).subscribe(
+        res => {
+          console.log("res", res )
+          this.posts = res;
+        },
+        err => {
+          console.log("err", err )
+        }
+      )
+  
+    }
   
   ngOnInit() {
-    this.getPost() // call
+    // this.getPost() // call
+    // this.searchPost() // call
   }
 
 

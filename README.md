@@ -818,3 +818,169 @@ export class PostsComponent {
 
 }
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###  Service: Search Post
+
+##### src/app/services/base.service.ts
+```js
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+
+@Injectable({
+  providedIn: 'root'
+})
+
+export class BaseService {
+  
+  constructor(
+    private httpClient: HttpClient
+  ) { }
+  
+  public all( url: string ) {
+    return this.httpClient.get( `${environment.API_URL}${url}` );
+  }
+
+  public search( _url: string, _search: string, _prePage: number, _page: number ) {
+    // /wp/v2/search
+    return this.httpClient.get( `${environment.API_URL}${_url}?search=${_search}&per_page=${_prePage}&page=${_page}` );
+  }
+}
+```
+
+
+
+
+#### src/app/views/frontend/pages/posts/posts.component.html
+```html
+<form>
+  <input 
+    [(ngModel)]="searchData.searchString"
+    name="searchString"
+    type="text"
+    class="form-control"
+    (change)="searchFunc()" />
+</form>
+
+<div class="table-responsive">
+    <table class="table text-center table-hover table-bordered">
+      <thead>
+        <tr>
+          <th style="width: 34%;">ID</th>
+          <th style="width: 22%;">Title</th>
+          <th style="width: 22%;">Description</th>
+        
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let post of posts">
+          <td>{{post.id}}</td>
+          <td>{{post.title}}</td>
+          <td>{{post.content}}</td>
+          <td> <a class="btn btn-primary" routerLink='/post/{{post.id}}'>View</a> </td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+```
+
+
+
+
+
+
+#### src/app/views/frontend/pages/posts/posts.component.ts
+```js
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+import { BaseService } from '../../../../services/base.service'
+import { ThrowStmt } from '@angular/compiler';
+
+@Component({
+  selector: 'app-posts',
+  templateUrl: './posts.component.html',
+  styleUrls: ['./posts.component.scss']
+})
+
+
+export class PostsComponent {
+ 
+  posts: any;
+
+  searchData = {
+    searchString: ''
+  }
+
+  constructor(
+    public http: HttpClient,
+    public baseService: BaseService
+  ) { }
+
+  
+  searchFunc() {
+    console.log(this.searchData.searchString)
+    this.searchPost( this.searchData.searchString )
+  }
+  
+  // Service
+  getPost() {
+    
+    console.log("getPost()... from baseService")
+
+    this.baseService.all('wp/v2/posts').subscribe(
+      res => {
+        console.log("res", res )
+        this.posts = res;
+      },
+      err => {
+        console.log("err", err )
+      }
+    )
+
+  }
+
+
+
+
+    // Search Service
+    searchPost( _str ) {
+    
+      console.log("searchPost()... from baseService")
+  
+      this.baseService.search("wp/v2/search", _str, 4, 1 ).subscribe(
+        res => {
+          console.log("res", res )
+          this.posts = res;
+        },
+        err => {
+          console.log("err", err )
+        }
+      )
+  
+    }
+  
+  ngOnInit() {
+    // this.getPost() // call
+    // this.searchPost() // call
+  }
+}
+```
