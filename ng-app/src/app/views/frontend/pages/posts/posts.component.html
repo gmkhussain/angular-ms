@@ -9,14 +9,14 @@
     (change)="searchFunc()" />
 </form>
 
-<div class="table-responsive">
+<div *ngIf="searchData.isSearched==true" class="table-responsive">
     <table class="table text-center table-hover table-bordered">
       <thead>
         <tr>
           <th style="width: 34%;">ID</th>
           <th style="width: 22%;">Title</th>
           <th style="width: 22%;">Description</th>
-        
+          
         </tr>
       </thead>
       <tbody>
@@ -24,7 +24,10 @@
           <td>{{post.id}}</td>
           <td>{{post.title}}</td>
           <td>{{post.content}}</td>
-          <td> <a class="btn btn-primary" routerLink='/post/{{post.id}}'>View</a> </td>
+          <td>
+            <a class="btn-sm" routerLink='/post/{{post.id}}'>View</a>
+            <a class="btn-sm" (click)="deleteFunc(post.id)">X</a>
+          </td>
         </tr>
       </tbody>
     </table>

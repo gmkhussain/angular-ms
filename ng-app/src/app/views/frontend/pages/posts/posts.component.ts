@@ -18,6 +18,7 @@ export class PostsComponent {
   posts: any;
 
   searchData = {
+    isSearched: false,
     searchString: ''
   }
 
@@ -41,6 +42,7 @@ export class PostsComponent {
       res => {
         console.log("res", res )
         this.posts = res;
+        this.searchData.isSearched = true
       },
       err => {
         console.log("err", err )
@@ -68,11 +70,30 @@ export class PostsComponent {
       )
   
     }
+
+
+
+    deleteFunc( _id ) {
+      console.log("Id", _id )
+
+      this.baseService.delete("wp/v2/posts", _id ).subscribe(
+        res => {
+          console.log("res", res )
+          this.posts = res;
+        },
+        err => {
+          console.log("err", err )
+        }
+      )
+
+    }
+
+
+
+
   
   ngOnInit() {
-    // this.getPost() // call
-    // this.searchPost() // call
+     this.getPost() // call
   }
-
 
 }

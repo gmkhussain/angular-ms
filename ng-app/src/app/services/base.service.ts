@@ -8,9 +8,29 @@ import { environment } from 'src/environments/environment';
 
 export class BaseService {
   
+ 
   constructor(
     private httpClient: HttpClient
   ) { }
+
+
+
+  private getHeaders(excludeToken?: boolean): HttpHeaders {
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('accept', 'application/json');
+    headers = headers.append('Content-Type', 'application/json');
+    if (!excludeToken) {
+      headers = headers.append('Authorization', 'Bearer ' + localStorage.getItem("token") );
+    }
+
+    return headers;
+  }
+
+
+
+
+
+
   
   public all( url: string ) {
     return this.httpClient.get( `${environment.API_URL}${url}` );
@@ -25,12 +45,14 @@ export class BaseService {
   //   return this.httpClient.post( `${environment.API_URL}${url}`, payload , CONFIG );
   // }
 
-  // delete(id, url, CONFIG) {
-  //   return this.httpClient.post( `${environment.API_URL}${url}${id}`, {}, CONFIG );
-  // }
+  delete(url, id) {
+    const headers = this.getHeaders();
+    return this.httpClient.delete( `${environment.API_URL}${url}/${id}`, { headers: headers });
+  }
 
   // edit(payload, id, url, CONFIG) {
   //   return this.httpClient.post( `${environment.API_URL}${url}${id}`, payload, CONFIG );
   // }
+
 
 }

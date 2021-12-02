@@ -980,7 +980,186 @@ export class PostsComponent {
   
   ngOnInit() {
     // this.getPost() // call
-    // this.searchPost() // call
   }
 }
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Delete API
+
+
+#### base.service.ts
+
+```js
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+
+@Injectable({
+  providedIn: 'root'
+})
+
+export class BaseService {
+  
+ 
+  constructor(
+    private httpClient: HttpClient
+  ) { }
+
+
+  private getHeaders(excludeToken?: boolean): HttpHeaders {
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('accept', 'application/json');
+    headers = headers.append('Content-Type', 'application/json');
+    if (!excludeToken) {
+      headers = headers.append('Authorization', 'Bearer ' + localStorage.getItem("token") );
+    }
+
+    return headers;
+  }
+
+ 
+   public all( url: string ) {
+    return this.httpClient.get( `${environment.API_URL}${url}` );
+  }
+
+  public search( _url: string, _search: string, _prePage: number, _page: number ) {
+    // /wp/v2/search
+    return this.httpClient.get( `${environment.API_URL}${_url}?search=${_search}&per_page=${_prePage}&page=${_page}` );
+  }
+
+  delete(url, id) {
+    const headers = this.getHeaders();
+    return this.httpClient.delete( `${environment.API_URL}${url}/${id}`, { headers: headers });
+  }
+}
+```
+
+
+
+
+
+#### posts.component.ts
+```js
+import { Component, OnInit } from '@angular/core';
+
+import { HttpClient } from '@angular/common/http';
+
+import { BaseService } from '../../../../services/base.service'
+import { ThrowStmt } from '@angular/compiler';
+
+@Component({
+  selector: 'app-posts',
+  templateUrl: './posts.component.html',
+  styleUrls: ['./posts.component.scss']
+})
+
+
+export class PostsComponent {
+ 
+  posts: any;
+
+  searchData = {
+    isSearched: false,
+    searchString: ''
+  }
+
+  constructor(
+    public http: HttpClient,
+    public baseService: BaseService
+  ) { }
+
+  
+  searchFunc() {
+    console.log(this.searchData.searchString)
+    this.searchPost( this.searchData.searchString )
+  }
+  
+  // Service
+  getPost() {
+    
+    console.log("getPost()... from baseService")
+
+    this.baseService.all('wp/v2/posts').subscribe(
+      res => {
+        console.log("res", res )
+        this.posts = res;
+        this.searchData.isSearched = true
+      },
+      err => {
+        console.log("err", err )
+      }
+    )
+
+  }
+
+
+
+
+    // Search Service
+    searchPost( _str ) {
+    
+      console.log("searchPost()... from baseService")
+  
+      this.baseService.search("wp/v2/search", _str, 4, 1 ).subscribe(
+        res => {
+          console.log("res", res )
+          this.posts = res;
+        },
+        err => {
+          console.log("err", err )
+        }
+      )
+  
+    }
+
+
+
+    deleteFunc( _id ) {
+      
+      console.log("Id", _id )
+
+      this.baseService.delete("wp/v2/posts", _id ).subscribe(
+        res => {
+          console.log("res", res )
+          this.posts = res;
+        },
+        err => {
+          console.log("err", err )
+        }
+      )
+
+    }
+
+
+  ngOnInit() {
+     this.getPost() // call
+  }
+
+}
+
+```
+
+
+
+
+
+
+#### posts.component.html
+```html
+//..
+<a class="btn-sm" (click)="deleteFunc(post.id)">X</a>
+//..
 ```
