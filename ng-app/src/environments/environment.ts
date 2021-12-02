@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  API_URL: "http://localhost/projects/_rd/VueWP/wordpress/wp-json/jwt-auth/v1/token"
+  API_URL: "http://localhost/projects/_rd/VueWP/wordpress/wp-json/"
 };
 
 /*

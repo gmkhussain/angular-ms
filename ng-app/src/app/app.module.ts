@@ -16,6 +16,7 @@ import { DefaultLayoutComponent } from './views/frontend/layouts/default-layout/
 import { AuthLayoutComponent } from './views/frontend/layouts/auth-layout/auth-layout.component';
 import { LoginComponent } from './views/frontend/pages/login/login.component';
 import { DashboardComponent } from './views/backend/pages/dashboard/dashboard.component';
+import { AdminLayoutComponent } from './views/backend/layouts/admin-layout/admin-layout.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { DashboardComponent } from './views/backend/pages/dashboard/dashboard.co
     DefaultLayoutComponent,
     AuthLayoutComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    AdminLayoutComponent
   ],
   imports: [
     BrowserModule,

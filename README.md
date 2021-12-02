@@ -594,3 +594,227 @@ export class LoginService {
   }
 }
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Services
+- Create Admin Layout here ```/views/backend/layouts/admin-layout/```
+- ```ng g c admin-layout```
+
+- Include in app module file.
+#### src/app/app.module.ts
+```js
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { FormsModule } from '@angular/forms' 
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+
+import { HttpClientModule } from '@angular/common/http';
+
+import { HomeComponent } from './views/frontend/pages/home/home.component';
+import { HeaderComponent } from './views/frontend/layouts/header/header.component';
+import { PostsComponent } from './views/frontend/pages/posts/posts.component';
+import { PostSingleComponent } from './views/frontend/pages/post-single/post-single.component';
+import { DefaultLayoutComponent } from './views/frontend/layouts/default-layout/default-layout.component';
+import { AuthLayoutComponent } from './views/frontend/layouts/auth-layout/auth-layout.component';
+import { LoginComponent } from './views/frontend/pages/login/login.component';
+import { DashboardComponent } from './views/backend/pages/dashboard/dashboard.component';
+import { AdminLayoutComponent } from './views/backend/layouts/admin-layout/admin-layout.component'; //<-- NEW
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    HeaderComponent,
+    PostsComponent,
+    PostSingleComponent,
+    DefaultLayoutComponent,
+    AuthLayoutComponent,
+    LoginComponent,
+    DashboardComponent,
+    AdminLayoutComponent //<-- NEW
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    AppRoutingModule,
+    HttpClientModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+
+
+- Add route
+#### src\app\app-routing.module.ts
+```js
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+import { DefaultLayoutComponent } from './views/frontend/layouts/default-layout/default-layout.component';
+
+import { HomeComponent } from './views/frontend/pages/home/home.component';
+import { PostsComponent } from './views/frontend/pages/posts/posts.component';
+import { PostSingleComponent } from './views/frontend/pages/post-single/post-single.component';
+
+
+import { AuthLayoutComponent } from './views/frontend/layouts/auth-layout/auth-layout.component';
+
+import { LoginComponent } from './views/frontend/pages/login/login.component';
+
+
+import { AdminLayoutComponent } from './views/backend/layouts/admin-layout/admin-layout.component';
+import { DashboardComponent } from './views/backend/pages/dashboard/dashboard.component';
+
+
+
+const routes: Routes = [
+    // basic routes
+    {
+      path: '',
+      component: DefaultLayoutComponent, 
+      children: [
+        { path: '', component: HomeComponent },
+        { path: 'posts', component: PostsComponent },
+        { path: "post/:id", component: PostSingleComponent }
+      ]
+    },
+    {
+      path: 'login',
+      component: AuthLayoutComponent, 
+      children: [
+        { path: '', component: LoginComponent },
+      ]
+    },
+    {
+      path: 'admin',
+      component: AdminLayoutComponent, 
+      children: [
+        { path: 'dashboard', component: DashboardComponent },  // <-- NEW
+      ]
+    }
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+
+export class AppRoutingModule { }
+```
+
+
+
+
+
+
+
+
+### Create base service file
+- Goto ```src/app/services```
+- Run this command ```ng g s base```
+
+
+
+#### src/app/services/base.service.ts
+```js
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+
+@Injectable({
+  providedIn: 'root'
+})
+
+export class BaseService {
+
+  constructor(
+    private httpClient: HttpClient
+  ) { }
+  
+  public all( url: string ) {
+    return this.httpClient.get( `${environment.API_URL}${url}` );
+  }
+
+}
+```
+
+
+
+
+
+
+
+
+
+### Call API by Service
+- Open post file
+
+#### 
+```js
+import { Component, OnInit } from '@angular/core';
+// import { PostsService } from './posts.service'; // <-- Not in use now
+
+import { HttpClient } from '@angular/common/http';
+
+import { BaseService } from '../../../../services/base.service' // <-- NEW
+import { ThrowStmt } from '@angular/compiler';
+
+@Component({
+  selector: 'app-posts',
+  templateUrl: './posts.component.html',
+  styleUrls: ['./posts.component.scss']
+})
+
+
+export class PostsComponent {
+ 
+  posts: any;
+  constructor(
+    public http: HttpClient,
+    public baseService: BaseService
+  ) { }
+
+
+  // Service
+  getPost() {
+    
+    console.log("getPost()... from baseService")
+
+    this.baseService.all('wp/v2/posts').subscribe(
+      res => {
+        console.log("res", res )
+        this.posts = res;
+      },
+      err => {
+        console.log("err", err )
+      }
+    )
+  }
+
+  ngOnInit() {
+    this.getPost() // call
+  }
+
+}
+```

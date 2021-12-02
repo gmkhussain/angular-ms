@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { PostsService } from './posts.service'; // <--
+// import { PostsService } from './posts.service'; // <--
 
 import { HttpClient } from '@angular/common/http';
+
+import { BaseService } from '../../../../services/base.service'
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-posts',
@@ -13,12 +16,34 @@ import { HttpClient } from '@angular/common/http';
 export class PostsComponent {
  
   posts: any;
-  constructor(public http: HttpClient) {
-    // Rest API Calling
-    this.http.get('https://localhost/projects/_rd/VueWP/wordpress/wp-json/wp/v2/posts').subscribe(data => {
-      this.posts = data;
-      console.log("DATA:: ", this.posts );
-    });
+  constructor(
+    public http: HttpClient,
+    public baseService: BaseService
+  ) { }
+
+    
+  
+  // Service
+  getPost() {
+    
+    console.log("getPost()... from baseService")
+
+    this.baseService.all('wp/v2/posts').subscribe(
+      res => {
+        console.log("res", res )
+        this.posts = res;
+      },
+      err => {
+        console.log("err", err )
+      }
+    )
+
   }
+
+  
+  ngOnInit() {
+    this.getPost() // call
+  }
+
 
 }
