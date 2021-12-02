@@ -1,6 +1,22 @@
 <p>posts works!</p>
 
+
+
+
 <form>
+  <input 
+      [(ngModel)]="formData.title"
+      name="title"
+      type="text"
+      class="form-control" />
+  <button (click)="createFunc()">+ New</button>
+</form>
+
+
+<hr>
+
+<form>
+  <label>Search</label>
   <input 
     [(ngModel)]="searchData.searchString"
     name="searchString"

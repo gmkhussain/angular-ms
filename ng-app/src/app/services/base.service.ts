@@ -41,9 +41,10 @@ export class BaseService {
     return this.httpClient.get( `${environment.API_URL}${_url}?search=${_search}&per_page=${_prePage}&page=${_page}` );
   }
 
-  // add(url, payload, CONFIG) {
-  //   return this.httpClient.post( `${environment.API_URL}${url}`, payload , CONFIG );
-  // }
+  add(url, payload ) {
+    const headers = this.getHeaders();
+    return this.httpClient.post( `${environment.API_URL}${url}`, payload , { headers: headers } );
+  }
 
   delete(url, id) {
     const headers = this.getHeaders();

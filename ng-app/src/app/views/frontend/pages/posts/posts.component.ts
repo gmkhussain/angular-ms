@@ -17,6 +17,11 @@ export class PostsComponent {
  
   posts: any;
 
+  formData = {
+    title: '',
+    status: 'publish'
+  }
+
   searchData = {
     isSearched: false,
     searchString: ''
@@ -70,6 +75,27 @@ export class PostsComponent {
       )
   
     }
+
+
+
+
+    createFunc() {
+      console.log( "createFunc()..." )
+
+      const _data = this.formData;
+
+      this.baseService.add( "wp/v2/posts", _data ).subscribe(
+        res => {
+          console.log("res", res )
+          this.posts = res;
+          this.getPost() // Refresh data..
+        },
+        err => {
+          console.log("err", err )
+        }
+      )
+    }
+
 
 
 
