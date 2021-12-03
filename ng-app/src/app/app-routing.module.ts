@@ -6,6 +6,7 @@ import { DefaultLayoutComponent } from './views/frontend/layouts/default-layout/
 import { HomeComponent } from './views/frontend/pages/home/home.component';
 import { PostsComponent } from './views/frontend/pages/posts/posts.component';
 import { PostSingleComponent } from './views/frontend/pages/post-single/post-single.component';
+import { ContactComponent } from './views/frontend/pages/contact/contact.component';
 
 
 import { AuthLayoutComponent } from './views/frontend/layouts/auth-layout/auth-layout.component';
@@ -26,7 +27,8 @@ const routes: Routes = [
       children: [
         { path: '', component: HomeComponent },
         { path: 'posts', component: PostsComponent },
-        { path: "post/:id", component: PostSingleComponent }
+        { path: "post/:id", component: PostSingleComponent },
+        { path: 'contact', component: ContactComponent },
       ]
     },
     {

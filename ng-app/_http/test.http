@@ -1,12 +1,28 @@
+### Post
+
 GET http://localhost/projects/_rd/VueWP/wordpress/wp-json/wp/v2/posts
 
 
 ### Login API
 
-POST https://localhost/projects/_rd/VueWP/wordpress/wp-json/ jwt-auth/v1/token HTTP/1.1
+POST https://localhost/projects/_rd/VueWP/wordpress/wp-json/jwt-auth/v1/token HTTP/1.1
 content-type: application/json
 
 {
     "username": "admin",
     "password": "admin123"
+}
+
+
+### Email
+
+POST http://localhost/projects/_rd/VueWP/wordpress/wp-json/contact-form-7/v1/contact-forms/6/feedback HTTP/1.1
+
+content-type: multipart/form-data
+
+{
+    "yourName": "this.formInputs.yourName",
+    "yourEmail": "this@formInputs.com",
+    "yourSubject": "this.formInputs.yourSubject",
+    "yourMessage": "this.formInputs.yourMessage",
 }

@@ -1,0 +1,45 @@
+<p>contact works!</p>
+
+<form (submit)="sendEmailFunc()" method="POST">
+    <label>Name</label>
+    <input
+        [(ngModel)]="formInputs.yourName"
+        name="yourName"
+        id="yourName"
+        type="text"
+        class="form-control"
+        placeholder="Please Enter Your Full Name" required />
+
+    <label>Your Email</label>
+    <input 
+        [(ngModel)]="formInputs.yourEmail"
+        name="yourEmail"
+        id="yourEmail"
+        type="email"
+        class="form-control"
+        placeholder="Please Enter Your Address" required />
+
+    <label>Subject</label>
+    <input
+        [(ngModel)]="formInputs.yourSubject"
+        name="yourSubject"
+        id="yourSubject"
+        type="text"
+        class="form-control"
+        placeholder="Please Enter Your Subject" required />
+
+    <label>Message</label>
+    <textarea 
+        [(ngModel)]="formInputs.yourMessage"
+        name="yourMessage"
+        id="yourMessage"
+        type="text"
+        class="form-control"
+        placeholder="Description..."></textarea>
+
+    <button class="btn btnCustom"
+            type="submit"
+            id="postsubmit"
+            >Submit Data</button>
+
+</form>

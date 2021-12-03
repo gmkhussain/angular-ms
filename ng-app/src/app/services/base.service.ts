@@ -30,6 +30,20 @@ export class BaseService {
 
 
 
+  private getHeadersForm(excludeToken?: boolean): HttpHeaders {
+    let headers: HttpHeaders = new HttpHeaders();
+    // headers = headers.append('accept', 'application/json');
+    headers = headers.append('Content-Type', 'multipart/form-data;boundary='+Math.random() );
+    if (!excludeToken) {
+      headers = headers.append('Authorization', 'Bearer ' + localStorage.getItem("token") );
+    }
+
+    return headers;
+  }
+
+
+
+
 
   
   public all( url: string ) {
@@ -51,9 +65,19 @@ export class BaseService {
     return this.httpClient.delete( `${environment.API_URL}${url}/${id}`, { headers: headers });
   }
 
+
   edit( url, id, payload) {
     const headers = this.getHeaders();
     return this.httpClient.put( `${environment.API_URL}${url}/${id}`, payload ,{ headers: headers } );
   }
+
+
+  sendEmail( payload ) {
+    const _formid = 6;
+    const headers = this.getHeadersForm();
+    return this.httpClient.post( `${environment.API_URL}contact-form-7/v1/contact-forms/${_formid}/feedback`, payload , { headers: headers } );
+  }
+
+
 
 }
