@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from "@angular/forms";
+
 import { BaseService } from '../../../../services/base.service'
 
 @Component({
@@ -8,9 +10,20 @@ import { BaseService } from '../../../../services/base.service'
 })
 export class ContactComponent implements OnInit {
 
+  form: FormGroup;
+  
   constructor(
+    public fb: FormBuilder,
     public baseService: BaseService
-  ) { }
+  ) {
+    this.form = this.fb.group({
+      yourName: ['Amoos']
+    })
+   }
+
+  
+ 
+
 
   formInputs = {
     yourName: 'Amoos',
@@ -25,37 +38,21 @@ export class ContactComponent implements OnInit {
 
   sendEmailFunc() {
  
-    const emailBody = {
-          "yourName": "this.formInputs.yourName",
-          "yourEmail": this.formInputs.yourEmail,
-          "yourSubject": this.formInputs.yourSubject,
-          "yourMessage": this.formInputs.yourMessage,
-        };
-
-
-      let formData = new FormData();
-          formData.append("yourName", this.formInputs.yourName);
-
-      console.log(JSON.stringify(formData))
-
-      formData.forEach((value,key) => {
-        console.log(key+" "+value)
-      });
-        
-    
-    
-      setTimeout( ()=> {
-        
-          this.baseService.sendEmail( formData ).subscribe(
-            res => {
-              console.log("DONE", res)
-            },
-            err => {
-              console.log("Send Email Err", err )
-            }
-          )
-
-      }, 1000 )
+    console.log( this.form.value )
+ 
+   var formData: any = new FormData();
+       formData.append("yourName", this.form.get("yourName")!.value);
+      
+     
+      this.baseService.sendEmail( formData ).subscribe(
+        res => {
+          console.log("DONE", res)
+        },
+        err => {
+          console.log("Send Email Err", err )
+        }
+      )
+ 
     
   }
 
