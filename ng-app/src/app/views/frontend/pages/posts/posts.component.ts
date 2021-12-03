@@ -27,6 +27,12 @@ export class PostsComponent {
     searchString: ''
   }
 
+
+  updateData = {
+    title: ''
+  }
+
+
   constructor(
     public http: HttpClient,
     public baseService: BaseService
@@ -115,6 +121,33 @@ export class PostsComponent {
     }
 
 
+
+
+    /*
+     @ Edit Record
+    */
+    updateFunc( _data ) {
+      console.log( _data )
+      this.updateData = _data // Store Data to Form Inputs
+    }
+
+    saveUpdateFunc( _data ) {
+      console.log( _data )
+
+      this.baseService.edit("wp/v2/posts", _data.id, _data ).subscribe(
+        res => {
+          console.log("Updated:: res", res )
+          this.posts = res;
+          this.getPost() // Refresh Posts
+        },
+        err => {
+          console.log("err", err )
+        }
+      )
+    }
+    /*
+     @ ./Edit Record
+    */
 
 
   

@@ -51,9 +51,9 @@ export class BaseService {
     return this.httpClient.delete( `${environment.API_URL}${url}/${id}`, { headers: headers });
   }
 
-  // edit(payload, id, url, CONFIG) {
-  //   return this.httpClient.post( `${environment.API_URL}${url}${id}`, payload, CONFIG );
-  // }
-
+  edit( url, id, payload) {
+    const headers = this.getHeaders();
+    return this.httpClient.put( `${environment.API_URL}${url}/${id}`, payload ,{ headers: headers } );
+  }
 
 }

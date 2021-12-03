@@ -1433,3 +1433,223 @@ export class PostsComponent {
 
 }
 ```
+
+
+
+
+
+
+
+## Edit Record API
+
+#### base.service.ts
+```js
+//...
+  edit( url, id, payload) {
+    const headers = this.getHeaders();
+    return this.httpClient.put( `${environment.API_URL}${url}/${id}`, payload ,{ headers: headers } );
+  }
+//...
+```
+
+
+
+
+
+
+#### posts.component.html
+```html
+// ...
+<form>
+  <h4>Update</h4>
+  <input 
+      [(ngModel)]="updateData.title"
+      name="title"
+      type="text"
+      class="form-control" />
+  <button (click)="saveUpdateFunc(updateData)">+ Update</button>
+</form>
+// ...
+
+<div *ngIf="searchData.isSearched==true" class="table-responsive">
+    <table class="table text-center table-hover table-bordered">
+      <thead>
+        <tr>
+          <th style="width: 34%;">ID</th>
+          <th style="width: 22%;">Title</th>
+          <th style="width: 22%;">Description</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let post of posts">
+          <td>{{post.id}}</td>
+          <td>{{post.title.rendered}}</td>
+          <td>{{post.content.rendered}}</td>
+          <td>
+            <a class="btn-sm" routerLink='/post/{{post.id}}'>View</a>
+            <a class="btn-sm" (click)="deleteFunc(post.id)">X</a>
+            <a class="btn-sm" (click)="updateFunc(post)">Edit</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+```
+
+
+
+
+
+
+
+
+
+
+
+##### posts.components.ts
+```js
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { BaseService } from '../../../../services/base.service'
+import { ThrowStmt } from '@angular/compiler';
+
+@Component({
+  selector: 'app-posts',
+  templateUrl: './posts.component.html',
+  styleUrls: ['./posts.component.scss']
+})
+
+
+export class PostsComponent {
+ 
+  posts: any;
+
+  formData = { // <-- NEW
+    title: '',
+    status: 'publish'
+  }
+
+  searchData = {
+    isSearched: false,
+    searchString: ''
+  }
+
+  updateData = {
+    title: ''
+  }
+
+  constructor(
+    public http: HttpClient,
+    public baseService: BaseService
+  ) { }
+
+  
+  searchFunc() {
+    console.log(this.searchData.searchString)
+    this.searchPost( this.searchData.searchString )
+  }
+  
+  // Service
+  getPost() {
+    console.log("getPost()... from baseService")
+    this.baseService.all('wp/v2/posts').subscribe(
+      res => {
+        console.log("res", res )
+        this.posts = res;
+        this.searchData.isSearched = true
+      },
+      err => {
+        console.log("err", err )
+      }
+    )
+  }
+
+
+
+  // Search Service
+  searchPost( _str ) {
+  
+    console.log("searchPost()... from baseService")
+
+    this.baseService.search("wp/v2/search", _str, 4, 1 ).subscribe(
+      res => {
+        console.log("res", res )
+        this.posts = res;
+      },
+      err => {
+        console.log("err", err )
+      }
+    )
+  }
+
+
+
+
+  createFunc() { 
+    console.log( "createFunc()..." )
+    const _data = this.formData;
+    this.baseService.add( "wp/v2/posts", _data ).subscribe(
+      res => {
+        console.log("res", res )
+        this.posts = res;
+        this.getPost() // Refresh data..
+      },
+      err => {
+        console.log("err", err )
+      }
+    )
+  }
+
+
+
+  deleteFunc( _id ) {
+    console.log("Id", _id )
+
+    this.baseService.delete("wp/v2/posts", _id ).subscribe(
+      res => {
+        console.log("res", res )
+        this.posts = res;
+      },
+      err => {
+        console.log("err", err )
+      }
+    )
+  }
+
+
+
+  // <-- NEW
+  /*
+    @ Edit Record
+  */
+  updateFunc( _data ) {
+    console.log( _data )
+    this.updateData = _data // Store Data to Form Inputs
+  }
+
+  saveUpdateFunc( _data ) {
+    console.log( _data )
+
+    this.baseService.edit("wp/v2/posts", _data.id, _data ).subscribe(
+      res => {
+        console.log("Updated:: res", res )
+        this.posts = res;
+        this.getPost() // Refresh Posts
+      },
+      err => {
+        console.log("err", err )
+      }
+    )
+  }
+  /*
+    @ ./Edit Record
+  */
+
+  
+  ngOnInit() {
+    this.getPost() // call
+  }
+
+}
+```

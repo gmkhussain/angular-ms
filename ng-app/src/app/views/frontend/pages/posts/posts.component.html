@@ -1,9 +1,20 @@
 <p>posts works!</p>
 
+<form>
+  <h4>Update</h4>
+  <input 
+      [(ngModel)]="updateData.title"
+      name="title"
+      type="text"
+      class="form-control" />
+  <button (click)="saveUpdateFunc(updateData)">+ Update</button>
+</form>
 
 
+<hr>
 
 <form>
+  <h4>Add</h4>
   <input 
       [(ngModel)]="formData.title"
       name="title"
@@ -38,11 +49,12 @@
       <tbody>
         <tr *ngFor="let post of posts">
           <td>{{post.id}}</td>
-          <td>{{post.title}}</td>
-          <td>{{post.content}}</td>
+          <td>{{post.title.rendered}}</td>
+          <td>{{post.content.rendered}}</td>
           <td>
             <a class="btn-sm" routerLink='/post/{{post.id}}'>View</a>
             <a class="btn-sm" (click)="deleteFunc(post.id)">X</a>
+            <a class="btn-sm" (click)="updateFunc(post)">Edit</a>
           </td>
         </tr>
       </tbody>
