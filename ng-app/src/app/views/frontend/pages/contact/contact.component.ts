@@ -49,20 +49,19 @@ export class ContactComponent implements OnInit {
   
   sendEmailFunc() {
  
-    var formData: any = new FormData();
+    
+    let formData: FormData = new FormData();
         formData.append("yourName", this.form.get('yourName').value);
+        formData.append("yourEmail", this.form.get('yourEmail').value);
+        formData.append("yourSubject", this.form.get('yourSubject').value);
+        formData.append("yourMessage", this.form.get('yourMessage').value);
 
-        console.log("formData", this.form.value )
-
+        console.log("formData", formData )
  
-      this.baseService.sendEmail( this.form.value ).subscribe(
-        res => {
-          console.log("DONE", res)
-        },
-        err => {
-          console.log("Send Email Err", err )
-        }
-      ) 
+      this.baseService.sendEmail( formData ).subscribe(
+        (response) => console.log(response),
+        (error) => console.log(error)
+      )
 
   }
 
