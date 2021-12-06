@@ -10,7 +10,9 @@
         id="yourName"
         type="text"
         class="form-control"
-        placeholder="Please Enter Your Full Name" required />
+        placeholder="Please Enter Your Full Name"
+        (change)="inputChangeFunc()"
+        required />
 
     <label>Your Email</label>
     <input 

@@ -17,7 +17,10 @@ export class ContactComponent implements OnInit {
     public baseService: BaseService
   ) {
     this.form = this.fb.group({
-      yourName: ['Amoos']
+      yourName: ['Amoos'],
+      yourEmail: ['info@me.now'],
+      yourSubject: ['Welcome'],
+      yourMessage: ['Something']
     })
    }
 
@@ -36,25 +39,31 @@ export class ContactComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  inputChangeFunc() {
+    console.log("updated input")
+      const _NAME = this.form.get('yourName').value;
+      this.form.patchValue({
+        yourName: _NAME
+      });
+  }
+  
   sendEmailFunc() {
  
-    console.log( this.form.value )
+    var formData: any = new FormData();
+        formData.append("yourName", this.form.get('yourName').value);
+
+        console.log("formData", this.form.value )
+
  
-   var formData: any = new FormData();
-       formData.append("yourName", this.form.get("yourName")!.value);
-      
-     
-      this.baseService.sendEmail( formData ).subscribe(
+      this.baseService.sendEmail( this.form.value ).subscribe(
         res => {
           console.log("DONE", res)
         },
         err => {
           console.log("Send Email Err", err )
         }
-      )
- 
-    
-  }
+      ) 
 
+  }
 
 }

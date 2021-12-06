@@ -32,7 +32,7 @@ export class BaseService {
 
   private getHeadersForm(excludeToken?: boolean): HttpHeaders {
     let headers: HttpHeaders = new HttpHeaders();
-    // headers = headers.append('accept', 'application/json');
+    headers = headers.append('accept', 'application/json');
     headers = headers.append('Content-Type', 'multipart/form-data;boundary='+Math.random() );
     if (!excludeToken) {
       headers = headers.append('Authorization', 'Bearer ' + localStorage.getItem("token") );
@@ -73,6 +73,7 @@ export class BaseService {
 
 
   sendEmail( payload ) {
+    console.log("Email>>", payload )
     const _formid = 6;
     const headers = this.getHeadersForm();
     return this.httpClient.post( `${environment.API_URL}contact-form-7/v1/contact-forms/${_formid}/feedback`, payload , { headers: headers } );
