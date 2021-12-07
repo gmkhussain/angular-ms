@@ -11,7 +11,7 @@ import { ContactComponent } from './views/frontend/pages/contact/contact.compone
 
 import { AuthLayoutComponent } from './views/frontend/layouts/auth-layout/auth-layout.component';
 
-import { LoginComponent } from './views/frontend/pages/login/login.component';
+// import { LoginComponent } from './views/frontend/pages/login/login.component';
 
 
 import { AdminLayoutComponent } from './views/backend/layouts/admin-layout/admin-layout.component';
@@ -34,9 +34,10 @@ const routes: Routes = [
     {
       path: 'login',
       component: AuthLayoutComponent, 
-      children: [
-        { path: '', component: LoginComponent },
-      ]
+      loadChildren: () => import('./views/frontend/pages/login/login.module').then(m => m.LoginModule)
+      // children: [
+      //   { path: '', component: LoginComponent },
+      // ]
     },
     {
       path: 'admin',

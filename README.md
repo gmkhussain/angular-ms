@@ -1653,3 +1653,137 @@ export class PostsComponent {
 
 }
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Modular based routing
+
+#### src/app/app-routing.module.ts
+```js
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+import { DefaultLayoutComponent } from './views/frontend/layouts/default-layout/default-layout.component';
+
+import { HomeComponent } from './views/frontend/pages/home/home.component';
+import { PostsComponent } from './views/frontend/pages/posts/posts.component';
+import { PostSingleComponent } from './views/frontend/pages/post-single/post-single.component';
+import { ContactComponent } from './views/frontend/pages/contact/contact.component';
+
+
+import { AuthLayoutComponent } from './views/frontend/layouts/auth-layout/auth-layout.component';
+// import { LoginComponent } from './views/frontend/pages/login/login.component'; // <-- Comment
+
+
+import { AdminLayoutComponent } from './views/backend/layouts/admin-layout/admin-layout.component';
+import { DashboardComponent } from './views/backend/pages/dashboard/dashboard.component';
+
+
+
+const routes: Routes = [
+    // basic routes
+    {
+      path: '',
+      component: DefaultLayoutComponent, 
+      children: [
+        { path: '', component: HomeComponent },
+        { path: 'posts', component: PostsComponent },
+        { path: "post/:id", component: PostSingleComponent },
+        { path: 'contact', component: ContactComponent },
+      ]
+    },
+    {
+      path: 'login',
+      component: AuthLayoutComponent, 
+      loadChildren: () => import('./views/frontend/pages/login/login.module').then(m => m.LoginModule) // <-- NEW
+      // children: [
+      //   { path: '', component: LoginComponent },
+      // ]
+    },
+    {
+      path: 'admin',
+      component: AdminLayoutComponent, 
+      children: [
+        { path: 'dashboard', component: DashboardComponent },
+      ]
+    }
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+
+export class AppRoutingModule { }
+```
+
+
+
+
+
+
+
+
+
+
+#### src/app/views/frontend/login/login.module.ts
+```js
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
+import { LoginComponent } from './login.component';
+import { LoginComponentModule } from './login-routing.module';
+
+@NgModule({
+    imports: [
+        CommonModule,
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+        LoginComponentModule
+    ],
+    declarations: [LoginComponent],
+    bootstrap: [LoginComponent]
+})
+export class LoginModule { }
+```
+
+
+
+
+
+
+#### src/app/views/frontend/login/login-routing.module.ts
+```js
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { LoginComponent } from './login.component';
+
+const routes: Routes = [
+    {
+        path: '',
+        component: LoginComponent
+    }
+];
+
+@NgModule({
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
+})
+export class LoginComponentModule { }
+
+```

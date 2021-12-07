@@ -15,7 +15,7 @@ import { PostsComponent } from './views/frontend/pages/posts/posts.component';
 import { PostSingleComponent } from './views/frontend/pages/post-single/post-single.component';
 import { DefaultLayoutComponent } from './views/frontend/layouts/default-layout/default-layout.component';
 import { AuthLayoutComponent } from './views/frontend/layouts/auth-layout/auth-layout.component';
-import { LoginComponent } from './views/frontend/pages/login/login.component';
+// import { LoginComponent } from './views/frontend/pages/login/login.component';
 import { DashboardComponent } from './views/backend/pages/dashboard/dashboard.component';
 import { AdminLayoutComponent } from './views/backend/layouts/admin-layout/admin-layout.component';
 import { ContactComponent } from './views/frontend/pages/contact/contact.component';
@@ -29,7 +29,7 @@ import { ContactComponent } from './views/frontend/pages/contact/contact.compone
     PostSingleComponent,
     DefaultLayoutComponent,
     AuthLayoutComponent,
-    LoginComponent,
+    // LoginComponent,
     DashboardComponent,
     AdminLayoutComponent,
     ContactComponent
