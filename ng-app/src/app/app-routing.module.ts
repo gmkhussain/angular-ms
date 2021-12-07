@@ -4,8 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { DefaultLayoutComponent } from './views/frontend/layouts/default-layout/default-layout.component';
 
 import { HomeComponent } from './views/frontend/pages/home/home.component';
-import { PostsComponent } from './views/frontend/pages/posts/posts.component';
-import { PostSingleComponent } from './views/frontend/pages/post-single/post-single.component';
+// import { PostsComponent } from './views/frontend/pages/posts/posts.component';
+// import { PostSingleComponent } from './views/frontend/pages/post-single/post-single.component';
 import { ContactComponent } from './views/frontend/pages/contact/contact.component';
 
 
@@ -26,10 +26,14 @@ const routes: Routes = [
       component: DefaultLayoutComponent, 
       children: [
         { path: '', component: HomeComponent },
-        { path: 'posts', component: PostsComponent },
-        { path: "post/:id", component: PostSingleComponent },
+        // { path: 'posts', component: PostsComponent },
+        // { path: "post/:id", component: PostSingleComponent },
         { path: 'contact', component: ContactComponent },
       ]
+    },
+    {
+      path: 'posts',
+      loadChildren: () => import('./views/frontend/pages/posts/posts.module').then(m => m.PostsModule)
     },
     {
       path: 'login',
