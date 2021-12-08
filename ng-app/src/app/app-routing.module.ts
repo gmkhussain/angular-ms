@@ -12,6 +12,7 @@ import { ContactComponent } from './views/frontend/pages/contact/contact.compone
 import { AuthLayoutComponent } from './views/frontend/layouts/auth-layout/auth-layout.component';
 
 // import { LoginComponent } from './views/frontend/pages/login/login.component';
+import { ProductListComponent } from './views/frontend/pages/products/product-list/product-list.component';
 
 
 import { AdminLayoutComponent } from './views/backend/layouts/admin-layout/admin-layout.component';
@@ -28,6 +29,7 @@ const routes: Routes = [
         { path: '', component: HomeComponent },
         // { path: 'posts', component: PostsComponent },
         // { path: "post/:id", component: PostSingleComponent },
+        { path: 'products', component: ProductListComponent },
         { path: 'contact', component: ContactComponent },
       ]
     },
