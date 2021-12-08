@@ -84,4 +84,19 @@ export class BaseService {
 
 
 
+
+
+
+  public allProduct( url: string ) {
+    
+    let CK = 'ck_e23d2e0cdfced671b30dd3629332bfd1a9a3d64f';
+    let CS = 'cs_efc1cfbaf33f90dc5a95f8e59129c4d5c5471995';
+
+    let FULL_URL = `${environment.API_URL}${url}?consumer_key=${CK}&consumer_secret=${CS}`;
+        console.log("URL", FULL_URL )
+
+    return this.httpClient.get( FULL_URL );
+  }
+
+
 }

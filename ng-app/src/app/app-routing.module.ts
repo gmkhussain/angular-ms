@@ -29,10 +29,11 @@ const routes: Routes = [
         { path: '', component: HomeComponent },
         // { path: 'posts', component: PostsComponent },
         // { path: "post/:id", component: PostSingleComponent },
-        { path: 'products', component: ProductListComponent },
+        
         { path: 'contact', component: ContactComponent },
       ]
     },
+    { path: 'products', component: ProductListComponent },
     {
       path: 'posts',
       loadChildren: () => import('./views/frontend/pages/posts/posts.module').then(m => m.PostsModule)

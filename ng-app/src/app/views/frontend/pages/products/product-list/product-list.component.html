@@ -8,14 +8,13 @@
             <div *ngFor="let product of products"
                 class="col-md-3">
                 <div class="product__img">
-                    
+                    <img src={{product.images[0].src}} />
                 </div>
                 <div class="product__cont">
                     <h5>{{product.name}}</h5>
                     <span class="badge">Price: {{product.price}}</span>
-                    <div class="cont">
-                        {{product.description}}
-                    </div>
+                    <div class="cont"
+                        [innerHTML]="product.description"></div>
 
                 </div>
             </div>

@@ -15,6 +15,7 @@ import { BaseService } from '../../../../../services/base.service'
 
 export class PostsComponent {
  
+  pageTitle: string = "Posts..";
   posts: any;
 
   formData = {

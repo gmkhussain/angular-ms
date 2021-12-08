@@ -20,6 +20,7 @@ import { DashboardComponent } from './views/backend/pages/dashboard/dashboard.co
 import { AdminLayoutComponent } from './views/backend/layouts/admin-layout/admin-layout.component';
 import { ContactComponent } from './views/frontend/pages/contact/contact.component';
 
+import { ProductListComponent } from './views/frontend/pages/products/product-list/product-list.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { ContactComponent } from './views/frontend/pages/contact/contact.compone
     // LoginComponent,
     DashboardComponent,
     AdminLayoutComponent,
-    ContactComponent
+    ContactComponent,
+    ProductListComponent
   ],
   imports: [
     BrowserModule,

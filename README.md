@@ -1787,3 +1787,186 @@ const routes: Routes = [
 export class LoginComponentModule { }
 
 ```
+
+
+
+
+
+
+
+
+
+
+## Fetch WooCommerc Products
+
+- Goto ```src/app/views/frontend/pages/```
+- Create folder ```product```
+- Run command ```npm g c product-list```
+
+
+### app-routing.module.ts
+```js
+//..
+import { ProductListComponent } from './views/frontend/pages/products/product-list/product-list.component';
+//..
+
+const routes: Routes = [
+  // basic routes
+  //..
+    { path: 'products', component: ProductListComponent },
+  //..
+];
+  //..
+```
+
+
+
+
+
+
+
+
+
+
+### app.module.ts
+```js
+//..
+import { ProductListComponent } from './views/frontend/pages/products/product-list/product-list.component';
+//..
+
+@NgModule({
+  declarations: [
+    //..
+    ProductListComponent
+    //..
+  ],
+  //..
+})
+export class AppModule { }
+```
+
+
+
+
+
+
+
+
+
+
+
+
+#### base.services.ts
+```js
+//...
+  public allProduct( url: string ) {
+    
+    let CK = 'ck_e23d2e0cdfced671b30dd3629332bfd1a9a3d64f';
+    let CS = 'cs_efc1cfbaf33f90dc5a95f8e59129c4d5c5471995';
+
+    let FULL_URL = `${environment.API_URL}${url}?consumer_key=${CK}&consumer_secret=${CS}`;
+        console.log("URL", FULL_URL )
+
+    return this.httpClient.get( FULL_URL );
+  }
+//...
+```
+
+
+
+
+
+
+
+#### product-list.component.html
+```html
+<section class="page">
+    <div class="container">
+        <p>product-list works!</p>
+        <div class="row">
+
+            <h4>{{pageTitle}}</h4>
+
+            <div *ngFor="let product of products"
+                class="col-md-3">
+                <div class="product__img">
+                    <img src={{product.images[0].src}} />
+                </div>
+                <div class="product__cont">
+                    <h5>{{product.name}}</h5>
+                    <span class="badge">Price: {{product.price}}</span>
+                    
+                    <div class="cont"
+                        [innerHTML]="product.description"></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#### product-list.component.ts
+```js
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { BaseService } from '../../../../../services/base.service';
+
+@Component({
+  selector: 'app-product-list',
+  templateUrl: './product-list.component.html',
+  styleUrls: ['./product-list.component.scss']
+})
+export class ProductListComponent implements OnInit {
+
+  pageTitle: string = "Products..";
+  products: any;
+
+
+  constructor(
+    public httpClient: HttpClient,
+    public baseService: BaseService
+  ) { }
+
+
+  getProducts() {    
+    console.log("getProducts()... from baseService")
+
+    this.baseService.allProduct('wc/v3/products').subscribe(
+      res => {
+        console.log("res", res)
+        this.products = res
+        console.log( "Prodcut:", this.products )
+      },
+      err => console.log("err", err)
+    )
+  }
+
+  ngOnInit(): void {
+    this.getProducts()
+  }
+
+}
+```
+
+
+
+
+
+
+
+
+##### Media Image API Services

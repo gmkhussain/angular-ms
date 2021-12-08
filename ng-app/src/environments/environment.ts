@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  API_URL: "http://localhost/projects/_rd/VueWP/wordpress/wp-json/"
+  API_URL: "https://localhost/projects/_rd/VueWP/wordpress/wp-json/"
 };
 
 /*
