@@ -9,9 +9,10 @@ import { BaseService } from '../../../../../services/base.service';
 })
 export class ProductListComponent implements OnInit {
 
+  pageTitle: string = "Products..";
+  products: any;
 
-  products: []
-  
+
   constructor(
     public httpClient: HttpClient,
     public baseService: BaseService
@@ -23,7 +24,12 @@ export class ProductListComponent implements OnInit {
     console.log("getProducts()... from baseService")
 
     this.baseService.allProduct('wc/v3/products').subscribe(
-      res => console.log("res", res),
+      res => {
+        console.log("res", res)
+        this.products = res
+
+        console.log( "Prodcut:", this.products )
+      },
       err => console.log("err", err)
     )
   }

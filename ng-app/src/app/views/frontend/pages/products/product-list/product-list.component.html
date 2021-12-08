@@ -1,5 +1,26 @@
 <section class="page">
     <div class="container">
         <p>product-list works!</p>
+        <div class="row">
+
+            <h4>{{pageTitle}}</h4>
+
+            <div *ngFor="let product of products"
+                class="col-md-3">
+                <div class="product__img">
+                    
+                </div>
+                <div class="product__cont">
+                    <h5>{{product.name}}</h5>
+                    <span class="badge">Price: {{product.price}}</span>
+                    <div class="cont">
+                        {{product.description}}
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
+
     </div>
 </section>
