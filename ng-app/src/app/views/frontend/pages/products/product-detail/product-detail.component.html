@@ -1,0 +1,41 @@
+<section class="page">
+    <div class="container">
+        <p>product-detail works!</p>
+        <div class="row" 
+            *ngIf="productInfo">
+            // *ngIf="productInfo" to avoid ERROR TypeError: ctx.productInfo is undefined
+
+            <div class="product__img col-md-4">
+                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                    
+                    <div class="carousel-indicators">
+
+                        <div *ngFor="img of productInfo.images; let i = index">
+                            <button
+                                type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"   aria-current="true" aria-label="Slide 1">{{i}}</button>
+                        </div>
+                      
+                    </div>
+
+                    <div class="carousel-inner">
+                      <div class="carousel-item active">
+                        <img src="..." class="d-block w-100" alt="...">
+                      </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Next</span>
+                    </button>
+                  </div>
+            </div>
+            <div class="product__cont col-md-4">
+                <h4>{{productInfo.name}}</h4>
+                <div class="desc" [innerHTML]="productInfo.description"></div>
+            </div>
+        </div>
+    </div>
+</section>
