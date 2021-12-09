@@ -62,6 +62,66 @@ export class AppRoutingModule { }
 
 
 
+## Accordion Collapse
+
+```js
+  public currentRowExpend: string = '';
+  public currentRowBtnStatus: boolean = false;
+  
+  rowExpendChange(_id) {
+    return 'accordion_'+_id
+  }
+
+  accordionToggle( _id: any ) {
+
+    let selectedRow = 'accordion_'+_id
+    
+    if(this.currentRowExpend == selectedRow) {
+      this.currentRowExpend = ''
+    } else {
+      this.currentRowExpend = selectedRow
+    }
+
+    this.currentRowBtnStatus = !this.currentRowBtnStatus;  
+  }
+```
+
+
+
+
+
+### Fragment and accordion
+
+```html
+<ng-container *ngFor="let post of posts">
+      <tr>
+        <td>{{post.id}}</td>
+        <td>{{post.title.rendered}}</td>
+        <td>{{post.content.rendered}}</td>
+        <td>
+          <a class="btn-sm" routerLink='/post/{{post.id}}'>View</a>
+          <a class="btn-sm" (click)="deleteFunc(post.id)">X</a>
+          <a class="btn-sm" (click)="updateFunc(post)">Edit</a>
+
+          <span class="btn-collapse fa fa-angle-right"
+                [class.open]="currentRowExpend == rowExpendChange(post.id)"
+                [id]="post.id"                                      
+                (click)="accordionToggle(post.id)">Quick View</span>
+          
+        </td>
+      </tr>
+      <tr *ngIf="currentRowExpend == rowExpendChange(post.id)">
+        <td colspan="8">
+          <p>Date: {{post.date}}</p>
+          <p>Status: {{post.status}}</p>              
+        </td>
+      </tr>
+</ng-container>
+```
+
+
+
+
 
 
 ## Tabs
