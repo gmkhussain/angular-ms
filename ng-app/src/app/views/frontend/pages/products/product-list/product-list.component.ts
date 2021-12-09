@@ -23,6 +23,7 @@ export class ProductListComponent implements OnInit {
     
     console.log("getProducts()... from baseService")
 
+    /* Fetch All Products
     this.baseService.allProduct('wc/v3/products').subscribe(
       res => {
         console.log("res", res)
@@ -35,6 +36,21 @@ export class ProductListComponent implements OnInit {
         this.errorMsg = `${err.statusText} | Server not response`;
       }
     )
+    */
+
+    this.baseService.productListing('wc/v3/products', {_perPageLimit:2, _currentPageNumber:2 }).subscribe(
+      res => {
+        console.log("res", res)
+        this.products = res
+
+        console.log( "Prodcut:", this.products )
+      },
+      err => {
+        console.log("err", err)
+        this.errorMsg = `${err.statusText} | Server not response`;
+      }
+    )
+
   }
 
 

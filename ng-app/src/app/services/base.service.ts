@@ -97,8 +97,18 @@ export class BaseService {
     return this.httpClient.get( FULL_URL );
   }
 
-  
-  
+
+
+  public productListing( url, _options:{ _perPageLimit: number , _currentPageNumber: number } ) {
+    
+    let FULL_URL = `${environment.API_URL}${url}?consumer_key=${this.CK}&consumer_secret=${this.CS}&per_page=${_options._perPageLimit}&page=${_options._currentPageNumber}`;
+
+    console.log("URL", FULL_URL )
+
+    return this.httpClient.get( FULL_URL );
+  }
+
+
 
   public productDetail( url , _id: number ) {
 

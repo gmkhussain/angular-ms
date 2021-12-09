@@ -2064,3 +2064,96 @@ export class ProductListComponent implements OnInit {
       *ngFor="let img of productInfo.images; let i = index"
       type="button" data-bs-target="#carouselExampleIndicators" [attr.data-bs-slide-to]="i" class="active" aria-current="true" aria-label="Slide 1">{{i}}</button>
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Pagination on Product Listing
+
+#### src/app/services/base.service.ts
+
+```js
+//...
+  public productListing( url, _options:{ _perPageLimit: number , _currentPageNumber: number } ) {
+    
+    let FULL_URL = `${environment.API_URL}${url}?consumer_key=${this.CK}&consumer_secret=${this.CS}&per_page=${_options._perPageLimit}&page=${_options._currentPageNumber}`;
+
+    console.log("URL", FULL_URL )
+
+    return this.httpClient.get( FULL_URL );
+  }
+//...
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##### src/app/views/frontend/pages/products/product-list/product-list.component.ts
+
+```js
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { BaseService } from '../../../../../services/base.service';
+
+@Component({
+  selector: 'app-product-list',
+  templateUrl: './product-list.component.html',
+  styleUrls: ['./product-list.component.scss']
+})
+export class ProductListComponent implements OnInit {
+
+  pageTitle: string = "Products..";
+  products: any;
+  errorMsg: any;
+
+  constructor(
+    public httpClient: HttpClient,
+    public baseService: BaseService
+  ) { }
+
+
+  getProducts() {
+    
+    console.log("getProducts()... from baseService")
+
+    this.baseService.productListing('wc/v3/products', {_perPageLimit:2, _currentPageNumber:2 }).subscribe(
+      res => {
+        console.log("res", res)
+        this.products = res
+
+        console.log( "Prodcut:", this.products )
+      },
+      err => {
+        console.log("err", err)
+        this.errorMsg = `${err.statusText} | Server not response`;
+      }
+    )
+
+  }
+
+
+  ngOnInit(): void {
+    this.getProducts()
+  }
+
+}
+```
