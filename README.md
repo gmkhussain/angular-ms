@@ -2125,6 +2125,14 @@ export class ProductListComponent implements OnInit {
   products: any;
   errorMsg: any;
 
+  pagination = {
+    totalRecords: 0,
+    currentPage: 1,
+    perPage: 3,
+    pages: 0,
+  };
+
+
   constructor(
     public httpClient: HttpClient,
     public baseService: BaseService
@@ -2151,9 +2159,66 @@ export class ProductListComponent implements OnInit {
   }
 
 
+  
+  
+
+
+  paginatorFunc() {
+
+    this.baseService.allProduct('wc/v3/products').subscribe(
+      res=> {
+        this.pagination.totalRecords = res['length']
+
+        let numberOfPages = Math.ceil( this.pagination.totalRecords / this.pagination.perPage )
+
+        console.log("numberOfPages", numberOfPages)
+        this.pagination.pages = numberOfPages;
+
+        console.log("total pages..", this.pagination.totalRecords)
+      },
+      err => {
+        console.log("Err", err )
+      }
+    )
+    
+  }
+
+
+  loadNewPage( _num ) {
+    this.pagination.currentPage = _num;
+    this.getProducts(); // call
+  }
+
   ngOnInit(): void {
+
+    this.paginatorFunc()
     this.getProducts()
   }
 
 }
+```
+
+
+
+
+
+
+
+
+
+
+#### product-list.component.html
+
+```html
+//..
+  <nav>
+    <ul class="pagination">
+        <li
+            *ngFor="let page of [].constructor(pagination.pages); let i = index"
+            class="page-item">
+            <a class="page-link" (click)="loadNewPage(i+1)" >{{i+1}}</a>
+        </li>
+    </ul>
+</nav>
+//..
 ```

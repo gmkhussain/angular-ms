@@ -27,6 +27,17 @@
                 </div>
             </div>
             
+
+            <nav>
+                <ul class="pagination">
+                    <li
+                        *ngFor="let page of [].constructor(pagination.pages); let i = index"
+                        class="page-item">
+                        <a class="page-link" (click)="loadNewPage(i+1)" >{{i+1}}</a>
+                    </li>
+                </ul>
+            </nav>
+
         </div>
 
     </div>
