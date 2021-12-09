@@ -151,6 +151,32 @@ export class PostsComponent {
     */
 
 
+
+
+
+
+     
+  public currentRowExpend: string = '';
+  public currentRowBtnStatus: boolean = false;
+  
+  rowExpendChange(_id) {
+    return 'accordion_'+_id
+  }
+
+  accordionToggle( _id: any ) {
+
+    let selectedRow = 'accordion_'+_id
+    
+    if(this.currentRowExpend == selectedRow) {
+      this.currentRowExpend = ''
+    } else {
+      this.currentRowExpend = selectedRow
+    }
+
+    this.currentRowBtnStatus = !this.currentRowBtnStatus;  
+  }
+
+
   
   ngOnInit() {
      this.getPost() // call
