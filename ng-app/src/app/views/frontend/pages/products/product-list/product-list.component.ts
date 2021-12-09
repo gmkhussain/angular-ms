@@ -11,7 +11,7 @@ export class ProductListComponent implements OnInit {
 
   pageTitle: string = "Products..";
   products: any;
-
+  errorMsg: any;
 
   constructor(
     public httpClient: HttpClient,
@@ -30,7 +30,10 @@ export class ProductListComponent implements OnInit {
 
         console.log( "Prodcut:", this.products )
       },
-      err => console.log("err", err)
+      err => {
+        console.log("err", err)
+        this.errorMsg = `${err.statusText} | Server not response`;
+      }
     )
   }
 

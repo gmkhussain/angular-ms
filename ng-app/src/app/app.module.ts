@@ -21,6 +21,7 @@ import { AdminLayoutComponent } from './views/backend/layouts/admin-layout/admin
 import { ContactComponent } from './views/frontend/pages/contact/contact.component';
 
 import { ProductListComponent } from './views/frontend/pages/products/product-list/product-list.component';
+import { ProductDetailComponent } from './views/frontend/pages/products/product-detail/product-detail.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ProductListComponent } from './views/frontend/pages/products/product-li
     DashboardComponent,
     AdminLayoutComponent,
     ContactComponent,
-    ProductListComponent
+    ProductListComponent,
+    ProductDetailComponent
   ],
   imports: [
     BrowserModule,

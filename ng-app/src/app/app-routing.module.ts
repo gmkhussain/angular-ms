@@ -13,6 +13,7 @@ import { AuthLayoutComponent } from './views/frontend/layouts/auth-layout/auth-l
 
 // import { LoginComponent } from './views/frontend/pages/login/login.component';
 import { ProductListComponent } from './views/frontend/pages/products/product-list/product-list.component';
+import { ProductDetailComponent } from './views/frontend/pages/products/product-detail/product-detail.component';
 
 
 import { AdminLayoutComponent } from './views/backend/layouts/admin-layout/admin-layout.component';
@@ -31,9 +32,11 @@ const routes: Routes = [
         // { path: "post/:id", component: PostSingleComponent },
         
         { path: 'contact', component: ContactComponent },
+        { path: 'products', component: ProductListComponent },
+        { path: 'product/:id', component: ProductDetailComponent },
       ]
     },
-    { path: 'products', component: ProductListComponent },
+    
     {
       path: 'posts',
       loadChildren: () => import('./views/frontend/pages/posts/posts.module').then(m => m.PostsModule)

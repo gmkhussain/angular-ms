@@ -8,25 +8,36 @@
             <div class="product__img col-md-4">
                 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                     
-                    <div class="carousel-indicators">
+                    <div
+                        *ngIf="productInfo.images?.length !== 1" 
+                        class="carousel-indicators" >
 
-                        <div *ngFor="img of productInfo.images; let i = index">
-                            <button
-                                type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"   aria-current="true" aria-label="Slide 1">{{i}}</button>
-                        </div>
+                          <button
+                              *ngFor="let img of productInfo.images; let i = index"
+                              type="button" data-bs-target="#carouselExampleIndicators" [attr.data-bs-slide-to]="i" class="active" aria-current="true" aria-label="Slide 1">{{i}}</button>
                       
                     </div>
 
                     <div class="carousel-inner">
-                      <div class="carousel-item active">
-                        <img src="..." class="d-block w-100" alt="...">
-                      </div>
+                      
+                        <div  *ngFor="let image of productInfo.images; let i = index"
+                              class="carousel-item" 
+                              [class.active] = "i === 0">
+                          <img src="{{image.src}}" alt="">
+                        </div>
+                      
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+
+                    <button
+                          *ngIf="productInfo.images?.length !== 1" 
+                          class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                       <span class="visually-hidden">Previous</span>
                     </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+
+                    <button 
+                          *ngIf="productInfo.images?.length !== 1" 
+                          class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
                       <span class="carousel-control-next-icon" aria-hidden="true"></span>
                       <span class="visually-hidden">Next</span>
                     </button>
@@ -34,6 +45,12 @@
             </div>
             <div class="product__cont col-md-4">
                 <h4>{{productInfo.name}}</h4>
+                <p>Categories: 
+                  <mark *ngFor="let cata of productInfo.categories; let i = index" >
+                    {{cata.name}}
+                  </mark>
+                </p>
+                <p>Price: {{productInfo.regular_price}}</p>
                 <div class="desc" [innerHTML]="productInfo.description"></div>
             </div>
         </div>

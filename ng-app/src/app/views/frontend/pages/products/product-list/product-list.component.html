@@ -5,10 +5,17 @@
 
             <h4>{{pageTitle}}</h4>
 
+            <div
+                *ngIf="errorMsg"
+                class="alert alert-danger">
+                {{errorMsg}}
+            </div>
+
             <div *ngFor="let product of products"
                 class="col-md-3">
                 <div class="product__img">
-                    <img src={{product.images[0].src}} />
+                    <img src={{product.images[0].src}}
+                    width="50" />
                 </div>
                 <div class="product__cont">
                     <h5>{{product.name}}</h5>
@@ -16,6 +23,7 @@
                     <div class="cont"
                         [innerHTML]="product.description"></div>
 
+                        <a routerLink='/product/{{product.id}}'>View</a>
                 </div>
             </div>
             
