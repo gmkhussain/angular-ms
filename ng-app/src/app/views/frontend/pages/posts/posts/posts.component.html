@@ -35,6 +35,7 @@
     class="form-control"
     (change)="searchFunc()" />
 </form>
+{{ 2012 | age  }}
 
 <div *ngIf="searchData.isSearched===true" class="table-responsive">
     <table class="table text-center table-hover table-bordered">
@@ -42,7 +43,7 @@
         <tr>
           <th style="width: 34%;">ID</th>
           <th style="width: 22%;">Title</th>
-          <th style="width: 22%;">Description</th>
+          <th style="width: 22%;">Tags</th>
           
         </tr>
       </thead>
@@ -51,8 +52,10 @@
           <tr>
             <td>{{post.id}}</td>
             <td>{{post.title.rendered}}</td>
-            <td>{{post.content.rendered}}</td>
+            <td>{{post.tags}}</td>
+            <td>{{post.date | age }}</td>
             <td>
+
               <a class="btn-sm" routerLink='/post/{{post.id}}'>View</a>
               <a class="btn-sm" (click)="deleteFunc(post.id)">X</a>
               <a class="btn-sm" (click)="updateFunc(post)">Edit</a>
@@ -61,7 +64,7 @@
                     [class.open]="currentRowExpend == rowExpendChange(post.id)"
                     [id]="post.id"                                      
                     (click)="accordionToggle(post.id)">Quick View</span>
-              
+
             </td>
           </tr>
           <tr *ngIf="currentRowExpend == rowExpendChange(post.id)">

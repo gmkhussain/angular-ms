@@ -8,6 +8,9 @@ import { PostsComponent } from './posts/posts.component';
 // import { PostSingleComponent } from './post-single/post-single.component';
 import { PostsComponentModule } from './posts-routing.module';
 
+import { AgePipe } from '../../../../pipes/age.pipe';
+
+
 @NgModule({
     imports: [
         CommonModule,
@@ -16,7 +19,10 @@ import { PostsComponentModule } from './posts-routing.module';
         ReactiveFormsModule,
         PostsComponentModule,
     ],
-    declarations: [PostsComponent],
+    declarations: [
+        PostsComponent,
+        AgePipe
+    ],
     bootstrap: [PostsComponent]
    
 })
