@@ -21,6 +21,7 @@ import { ContactComponent } from './views/frontend/pages/contact/contact.compone
 
 import { ProductListComponent } from './views/frontend/pages/products/product-list/product-list.component';
 import { ProductDetailComponent } from './views/frontend/pages/products/product-detail/product-detail.component';
+import { UsersComponent } from './views/backend/pages/users/users.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { ProductDetailComponent } from './views/frontend/pages/products/product-
     ContactComponent,
     ProductListComponent,
     ProductDetailComponent,
+    UsersComponent,
   ],
   imports: [
     BrowserModule,

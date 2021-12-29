@@ -18,6 +18,7 @@ import { ProductDetailComponent } from './views/frontend/pages/products/product-
 
 import { AdminLayoutComponent } from './views/backend/layouts/admin-layout/admin-layout.component';
 import { DashboardComponent } from './views/backend/pages/dashboard/dashboard.component';
+import { UsersComponent } from './views/backend/pages/users/users.component';
 
 
 
@@ -54,6 +55,7 @@ const routes: Routes = [
       component: AdminLayoutComponent, 
       children: [
         { path: 'dashboard', component: DashboardComponent },
+        { path: 'users', component: UsersComponent },
       ]
     }
 ];

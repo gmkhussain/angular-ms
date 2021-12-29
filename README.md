@@ -2282,3 +2282,109 @@ export class ProductListComponent implements OnInit {
 </nav>
 //..
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Custome Pipes
+- Creating Pipes ```ng g pipe pipes/age```
+- E.g. ```ng g pipe pipes-folder/file-name```
+
+
+
+#### age.pipe.ts
+```js
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  name: 'age'
+})
+export class AgePipe implements PipeTransform {
+
+  transform(value: any, ...args: any[]): any {
+    // Your Code Goes Here...
+    //2021-12-08T14:00:43
+    const d = new Date();
+    let num = value.split('-');
+    let res = `Year: ${num[0]} Month: ${num[1]}`;
+    return res;
+  }
+
+}
+
+```
+
+
+
+
+- Import Pipes Module in modules based file ```posts.module.ts```  or ```app.module.ts```
+
+```js
+  //..
+  import { AgePipe } from '../../../../pipes/age.pipe'; // <-- NEW
+  //..
+@NgModule({
+  //..
+  declarations: [
+  //..
+    AgePipe // <-- NEW
+  ],
+  //..
+})
+```
+
+#### posts.module.ts
+```js
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
+import { PostsComponent } from './posts/posts.component';
+import { PostsComponentModule } from './posts-routing.module';
+
+import { AgePipe } from '../../../../pipes/age.pipe'; // <-- NEW
+
+
+@NgModule({
+    imports: [
+        CommonModule,
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+        PostsComponentModule,
+    ],
+    declarations: [
+        PostsComponent,
+        AgePipe // <-- NEW
+    ],
+    bootstrap: [PostsComponent]
+})
+export class PostsModule { }
+```
+
+
+
+
+
+
+
+
+#### posts.component.html
+```js
+//...
+  {{ post.date | age }}
+//...
+```
+
+
