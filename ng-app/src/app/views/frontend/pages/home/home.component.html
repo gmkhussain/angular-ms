@@ -1,12 +1,23 @@
 <p>home works!</p>
 
+<button (click)="add('1')">add</button>
+
 <div class="tab">
-    <ul>
-      <li id="mission" (click)="tabChange('mission')">Our Mission</li>
-      <li id="vision" (click)="tabChange('vision')">Our Vision</li>
-      <li id="about" (click)="tabChange('about')">About</li>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation"
+          id="mission" (click)="tabChange('mission')">
+          <span class="nav-link">Our Mission</span>
+      </li>
+      <li class="nav-item" role="presentation"
+          id="vision" (click)="tabChange('vision')">
+          <span class="nav-link">Our Vision</span>
+      </li>
+      <li class="nav-item" role="presentation"
+          id="about" (click)="tabChange('about')">
+          <span class="nav-link">About</span>
+        </li>
     </ul>
-    <div class="content">
+    <div class="tab-content content">
       <div class="content-value" [hidden]="currentTab != 'mission'">
         <p>Mission content...</p>
       </div>

@@ -2388,3 +2388,56 @@ export class PostsModule { }
 ```
 
 
+
+
+
+
+
+
+
+
+
+## Util
+
+#### app/util/util.services.ts
+```js
+export const doSomething = (val: string): any => {
+  console.log( val++ )
+  return val++;
+};
+```
+
+
+
+
+
+#### home.components.ts
+```ts
+import { Component, OnInit } from '@angular/core';
+import { doSomething } from 'src/app/util/util.services';
+
+@Component({
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
+})
+
+export class HomeComponent implements OnInit {
+  
+  add = doSomething;
+
+  constructor( ) { }
+
+  ngOnInit(): void { }
+
+}
+```
+
+
+
+
+
+#### home.component.html
+```
+<button (click)="add(1)">add</button>
+```

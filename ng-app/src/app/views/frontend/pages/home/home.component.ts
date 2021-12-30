@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { doSomething } from 'src/app/util/util.services';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
+
 export class HomeComponent implements OnInit {
   
   public currentTab: string = 'mission';
@@ -13,9 +15,16 @@ export class HomeComponent implements OnInit {
     this.currentTab = selectedTab
   }
 
+  // tabChange = tabChanger( this.currentTab );
 
-  constructor() { }
-    ngOnInit(): void {
+  add = doSomething;
+
+
+  constructor(
+  ) { }
+
+  
+  ngOnInit(): void {
   }
 
 }
