@@ -12,7 +12,7 @@ import { retry, catchError } from 'rxjs/operators';
 
 export class UsersService {
 
-  private REST_API_SERVER = "https://localhost/projects/_rd/VueWP/wordpress/wp-json/wp/v2/posts";
+  private REST_API_SERVER = "https://localhost/projects/_rd/VueWP/wordpress/wp-json/wp/v2/users";
 
   constructor(private httpClient: HttpClient) { }
 

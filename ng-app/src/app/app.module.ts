@@ -22,6 +22,8 @@ import { ContactComponent } from './views/frontend/pages/contact/contact.compone
 import { ProductListComponent } from './views/frontend/pages/products/product-list/product-list.component';
 import { ProductDetailComponent } from './views/frontend/pages/products/product-detail/product-detail.component';
 import { UsersComponent } from './views/backend/pages/users/users.component';
+import { SidebarComponent } from './views/backend/layouts/sidebar/sidebar.component';
+import { DateTimePipePipe } from './pipes/date-time-pipe.pipe';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,8 @@ import { UsersComponent } from './views/backend/pages/users/users.component';
     ProductListComponent,
     ProductDetailComponent,
     UsersComponent,
+    SidebarComponent,
+    DateTimePipePipe,
   ],
   imports: [
     BrowserModule,

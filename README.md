@@ -2300,7 +2300,7 @@ export class ProductListComponent implements OnInit {
 - E.g. ```ng g pipe pipes-folder/file-name```
 
 
-
+### Age Pipe
 #### age.pipe.ts
 ```js
 import { Pipe, PipeTransform } from '@angular/core';
@@ -2387,6 +2387,86 @@ export class PostsModule { }
 //...
 ```
 
+
+
+
+
+
+
+
+
+
+
+### Date Time Format Custom Pipe
+- Creating Pipes ```ng g pipe pipes/dateTimePipe```
+- E.g. ```ng g pipe pipes-folder/file-name```
+
+
+#### date-time-pipe.pipe.ts
+```js
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  name: 'dateTimePipe'
+})
+export class DateTimePipePipe implements PipeTransform {
+
+  transform(value: any, ...args: any[]): any {
+    // 2021-12-08T14:00:43
+    let formattedDate = `${new Date( value ).toDateString().slice(4).replace(' ', ', ')} @ ${value.split('T')[1]}`;
+    // let formattedDate = val.replace('T', ' @ ')
+    return formattedDate;
+  }
+
+}
+```
+
+
+
+- Import Pipes Module in modules based file ```posts.module.ts```  or ```app.module.ts```
+
+```js
+  //..
+  import { DateTimePipe } from '../../../../pipes/date-time-pipe.pipe'; // <-- NEW
+  //..
+@NgModule({
+  //..
+  declarations: [
+  //..
+    DateTimePipe // <-- NEW
+  ],
+  //..
+})
+```
+
+
+
+
+
+
+
+
+
+#### home.component.ts
+```js
+import { Component, OnInit } from '@angular/core';
+  // ...
+
+export class HomeComponent implements OnInit {
+  // ...
+
+  public todayFormatedFunc = dateFormat('2021-12-30T06:47:00.241');
+  public today = '2021-12-30T06:47:00.241' // <-- NEW
+
+  // ...
+}
+```
+
+
+#### home.component.html * Usage
+```js
+{{ today | dateTimePipe }} // <-- NEW
+```
 
 
 
