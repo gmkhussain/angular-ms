@@ -15,16 +15,20 @@ export class HomeComponent implements OnInit {
     this.currentTab = selectedTab
   }
 
-  // tabChange = tabChanger( this.currentTab );
 
-  add = doSomething;
+  public add = doSomething;
 
+
+  returnedData : any;
+ 
 
   constructor(
+    // public add: doSomething
   ) { }
 
-  
+
   ngOnInit(): void {
+    this.returnedData = doSomething('steve');
   }
 
 }

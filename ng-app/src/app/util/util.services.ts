@@ -1,5 +1,5 @@
-export const doSomething = (val: string): any => {
-  console.log( val )
+export const doSomething = (val: string ): any => {
+
   return val;
 };
 
